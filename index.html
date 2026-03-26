@@ -165,6 +165,7 @@
       display:inline-block;
       position:relative;
       height:3.5rem;
+      box-shadow:0 0 0 2px rgba(255,255,255,0.25);
       width:var(--bm-w,13rem);
       cursor:pointer;
       border-radius:var(--radius-pill);
@@ -176,6 +177,8 @@
       flex-shrink:0;
       overflow:hidden;
       vertical-align:middle;
+      transition:background 520ms cubic-bezier(0.4,0,0.2,1),
+                 box-shadow  520ms cubic-bezier(0.4,0,0.2,1);
     }
     .btn-motion--light{
       /* Transition background + border so white padding ring disappears on full hover */
@@ -250,6 +253,8 @@
     /* Prevent browser default a:hover underline */
     .btn-motion:hover{
       text-decoration:none;
+      background:var(--primary);
+      box-shadow:0 0 0 2px var(--primary);
     }
     .btn-motion:focus-visible{
       outline:3px solid var(--primary);

@@ -75,8 +75,21 @@ const CACHE = {
 // ── Server ─────────────────────────────────────────────────────────────────
 const server = http.createServer((req, res) => {
 
+  // Security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://placehold.co https://maps.google.com; connect-src 'self'; frame-ancestors 'none';");
+
   // CORS headers for all responses
   res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Redirect /index.html → / to avoid duplicate content
+  if (req.url === '/index.html') {
+    res.writeHead(301, { 'Location': '/' });
+    res.end();
+    return;
+  }
 
   // Preflight
   if (req.method === 'OPTIONS') {

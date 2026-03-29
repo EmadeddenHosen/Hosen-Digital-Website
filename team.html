@@ -6,11 +6,18 @@
   <title>Our Team — Hosen Digital</title>
   <meta name="description" content="Meet the expert SEO team behind Hosen Digital. Our specialists help local businesses dominate Google search across the UK." />
   <link rel="canonical" href="https://hosendigital.co.uk/team" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Preconnect to all third-party origins used above the fold -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet" /></noscript>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <!-- Figtree variable font — single file covers wght 400-900, no italics needed -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..900&display=swap" rel="stylesheet" /></noscript>
+  <!-- Preload LCP candidate: first card image at the size browsers pick on desktop (600w) -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop&fm=webp&q=80"
+        imagesrcset="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&h=400&fit=crop&fm=webp&q=80 300w,
+                     https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop&fm=webp&q=80 600w"
+        imagesizes="(max-width:767px) calc(50vw - 30px), (max-width:1099px) calc(33vw - 36px), calc(25vw - 48px)" />
   <style>
     :root {
       --primary: #C8F000;
@@ -592,6 +599,8 @@
               alt="Sarah Mitchell"
               class="team-card__img"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
             <!-- Colour tint layer -->
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
@@ -636,6 +645,8 @@
               alt="James Okafor"
               class="team-card__img"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -678,7 +689,9 @@
               width="600" height="800"
               alt="Emma Chen"
               class="team-card__img"
-              loading="lazy"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -721,7 +734,9 @@
               width="600" height="800"
               alt="David Park"
               class="team-card__img"
-              loading="lazy"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -765,6 +780,7 @@
               alt="Priya Sharma"
               class="team-card__img"
               loading="lazy"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -808,6 +824,7 @@
               alt="Marcus Webb"
               class="team-card__img"
               loading="lazy"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -851,6 +868,7 @@
               alt="Lily Foster"
               class="team-card__img"
               loading="lazy"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -894,6 +912,7 @@
               alt="Tom Henriksen"
               class="team-card__img"
               loading="lazy"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">
@@ -937,6 +956,7 @@
               alt="Aisha Nwosu"
               class="team-card__img"
               loading="lazy"
+              decoding="async"
             />
             <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(200,240,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:1"></div>
             <div class="team-card__overlay" style="z-index:2">

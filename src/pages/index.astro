@@ -365,6 +365,7 @@ const menuBar = [
   { label: "Find Us",    href: "https://maps.google.com/?q=Hosen+Digital"      },
   { label: "Free Audit", href: "#contact"                                       },
 ];
+import SiteNav from '../components/SiteNav.astro';
 ---
 
 <!DOCTYPE html>
@@ -574,41 +575,7 @@ const menuBar = [
 
 <a href="#main-content" style="position:absolute;left:-9999px;top:0;z-index:999;background:var(--primary);color:var(--text-dark);padding:0.5rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
 
-<!-- ═══════════════ NAV ═══════════════ -->
-<nav>
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:0.875rem;padding-bottom:0.875rem;gap:1.5rem">
-    <a href="#" style="display:flex;align-items:center;flex-shrink:0">
-      <img src={nav.logoSrc} alt={nav.logoAlt} width="171" height="40" style="height:40px;width:auto" />
-    </a>
-    <div class="nav-links" style="align-items:center;gap:2rem">
-      {nav.links.map(link => (
-        <a href={link.href} class="nav-link" style={link.highlight ? "color:var(--primary)" : ""}>{link.label}</a>
-      ))}
-    </div>
-    <div style="display:flex;align-items:center;gap:1rem">
-      <a href={nav.ctaHref} class="btn-primary nav-cta" style="padding:0.75em 1.5em;font-size:0.875rem">{nav.ctaLabel}</a>
-      <button class="ham" aria-label="Menu" onclick="document.getElementById('mobileMenu').style.display='flex'">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<!-- Mobile Menu -->
-<div id="mobileMenu" style="display:none;position:fixed;inset:0;background:var(--base);z-index:100;flex-direction:column;padding:2rem;gap:1.5rem">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <img src={nav.logoSrc} alt={nav.logoAlt} width="154" height="36" style="height:36px;width:auto" />
-    <button onclick="document.getElementById('mobileMenu').style.display='none'" aria-label="Close menu" style="background:none;border:none;cursor:pointer;color:#fff;font-size:1.5rem;line-height:1" aria-expanded="true">✕</button>
-  </div>
-  {nav.links.map(link => (
-    <a href={link.href} class="nav-link" style={`font-size:1.25rem${link.highlight ? ";color:var(--primary)" : ""}`} onclick="document.getElementById('mobileMenu').style.display='none'">{link.label}</a>
-  ))}
-  <a href={nav.ctaHref} class="btn-motion" style="margin-top:auto;width:100%;--bm-w:100%" onclick="document.getElementById('mobileMenu').style.display='none'">
-    <span class="btn-motion__circle" aria-hidden="true"></span>
-    <div class="btn-motion__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-    <span class="btn-motion__text">{nav.ctaLabel}</span>
-  </a>
-</div>
+<SiteNav page="home" />
 
 <main id="main-content">
 

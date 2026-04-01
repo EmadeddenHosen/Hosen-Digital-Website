@@ -1,0 +1,134 @@
+---
+/**
+ * SiteNav.astro — Shared site navigation
+ *
+ * Props:
+ *   page — "home" | "team" | "ai-chat"
+ *          Used to highlight the active link and resolve hrefs correctly.
+ *          Defaults to "home".
+ */
+
+interface Props {
+  page?: "home" | "team" | "ai-chat";
+}
+
+const { page = "home" } = Astro.props;
+
+// Resolve section-anchor hrefs: same page on home, prefixed on other pages
+const base = page === "home" ? "" : "index.html";
+const s = (anchor: string) => (page === "home" ? anchor : `${base}${anchor}`);
+
+const links = [
+  { label: "Services",    href: s("#services"), key: null         },
+  { label: "About",       href: s("#about"),    key: null         },
+  { label: "Results",     href: s("#results"),  key: null         },
+  { label: "FAQ",         href: s("#faq"),      key: null         },
+  { label: "Contact",     href: s("#contact"),  key: null         },
+  { label: "Team",        href: "team.html",    key: "team"       },
+  { label: "Our AI Chat", href: "ai-chat.html", key: "ai-chat", highlight: true },
+];
+---
+
+<!-- ═══════════════ SITE NAV ═══════════════ -->
+<nav style="position:sticky;top:0;z-index:50;background:rgba(19,20,22,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07)">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-top:0.875rem;padding-bottom:0.875rem;gap:1.5rem">
+    <a href={page === "home" ? "#" : "index.html"} style="display:flex;align-items:center;flex-shrink:0">
+      <img src="brand_assets/HD_logo_Italic2-removebg.png" alt="Hosen Digital" width="171" height="40" style="height:40px;width:auto" />
+    </a>
+    <div class="site-nav-links" style="align-items:center;gap:2rem">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class="site-nav-link"
+          style={
+            link.key === page
+              ? "color:#fff"
+              : link.highlight && page !== "ai-chat"
+              ? "color:var(--primary)"
+              : ""
+          }
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <a href={s("#contact")} class="btn-primary site-nav-cta" style="padding:0.75em 1.5em;font-size:0.875rem">Let's Talk</a>
+      <button class="site-ham" aria-label="Open menu" onclick="document.getElementById('siteNavMobile').style.display='flex'">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="siteNavMobile" style="display:none;position:fixed;inset:0;background:var(--base);z-index:100;flex-direction:column;padding:2rem;gap:1.5rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <img src="brand_assets/HD_logo_Italic2-removebg.png" alt="Hosen Digital" width="154" height="36" style="height:36px;width:auto" />
+    <button
+      onclick="document.getElementById('siteNavMobile').style.display='none'"
+      aria-label="Close menu"
+      style="background:none;border:none;cursor:pointer;color:#fff;font-size:1.5rem;line-height:1"
+    >✕</button>
+  </div>
+  {links.map(link => (
+    <a
+      href={link.href}
+      class="site-nav-link"
+      style={[
+        "font-size:1.25rem",
+        link.key === page ? "color:#fff" : "",
+        link.highlight && page !== "ai-chat" ? "color:var(--primary)" : "",
+      ].filter(Boolean).join(";")}
+      onclick="document.getElementById('siteNavMobile').style.display='none'"
+    >
+      {link.label}
+    </a>
+  ))}
+  <a
+    href={s("#contact")}
+    class="btn-motion"
+    style="margin-top:auto;width:100%;--bm-w:100%"
+    onclick="document.getElementById('siteNavMobile').style.display='none'"
+  >
+    <span class="btn-motion__circle" aria-hidden="true"></span>
+    <div class="btn-motion__icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </div>
+    <span class="btn-motion__text">Let's Talk</span>
+  </a>
+</div>
+
+<style>
+  .site-nav-link {
+    color: rgba(255,255,255,0.72);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    padding: 0.25rem 0;
+  }
+  .site-nav-link:hover,
+  .site-nav-link:focus-visible { color: #fff; }
+  .site-nav-link:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+
+  .site-nav-links { display: none; }
+  @media (min-width: 951px) { .site-nav-links { display: flex; } }
+
+  .site-nav-cta { display: none; }
+  @media (min-width: 951px) { .site-nav-cta { display: inline-flex; } }
+
+  .site-ham {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  .site-ham span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+  @media (max-width: 950px) { .site-ham { display: flex; } }
+</style>

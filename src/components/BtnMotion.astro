@@ -1,0 +1,117 @@
+---
+/**
+ * BtnMotion.astro
+ * An animated button component with motion effects.
+ *
+ * Props:
+ *   label    — Button text (required)
+ *   href     — Optional link target; renders <a> when set, otherwise <button>
+ *   variant  — "primary" | "secondary" | "ghost"  (default: "primary")
+ *   size     — "sm" | "md" | "lg"                 (default: "md")
+ *   disabled — Disables the element                (default: false)
+ *   class    — Additional CSS class(es) to merge in
+ */
+
+interface Props {
+  label: string;
+  href?: string;
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  href,
+  variant = "primary",
+  size = "md",
+  disabled = false,
+  class: className = "",
+} = Astro.props;
+
+// Build the class string from variant + size tokens
+const base =
+  "btn-motion inline-flex items-center justify-center font-semibold tracking-wide rounded-lg select-none relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-[transform,opacity] duration-200 ease-out";
+
+const variants: Record<string, string> = {
+  primary:
+    "bg-[#1a1a2e] text-white border border-[#e8c468]/30 hover:border-[#e8c468]/70 focus-visible:ring-[#e8c468] shadow-[0_2px_8px_rgba(232,196,104,0.15)]",
+  secondary:
+    "bg-transparent text-[#1a1a2e] border border-[#1a1a2e]/40 hover:border-[#1a1a2e] focus-visible:ring-[#1a1a2e]",
+  ghost:
+    "bg-transparent text-[#e8c468] border border-[#e8c468]/30 hover:border-[#e8c468]/70 focus-visible:ring-[#e8c468]",
+};
+
+const sizes: Record<string, string> = {
+  sm: "px-4 py-2 text-sm gap-1.5",
+  md: "px-6 py-3 text-base gap-2",
+  lg: "px-8 py-4 text-lg gap-2.5",
+};
+
+const disabledClasses = disabled
+  ? "opacity-40 pointer-events-none cursor-not-allowed"
+  : "cursor-pointer";
+
+const classes = [base, variants[variant], sizes[size], disabledClasses, className]
+  .filter(Boolean)
+  .join(" ");
+
+const tag = href ? "a" : "button";
+---
+
+{
+  tag === "a" ? (
+    <a href={href} class={classes} aria-disabled={disabled ? "true" : undefined}>
+      <span class="btn-motion__ripple" aria-hidden="true" />
+      <span class="btn-motion__label relative z-10">{label}</span>
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class={classes} disabled={disabled}>
+      <span class="btn-motion__ripple" aria-hidden="true" />
+      <span class="btn-motion__label relative z-10">{label}</span>
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  /* ── Lift on hover ───────────────────────────────────────────── */
+  .btn-motion:not([disabled]):hover {
+    transform: translateY(-2px);
+  }
+  .btn-motion:not([disabled]):active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  /* ── Sheen / ripple layer ────────────────────────────────────── */
+  .btn-motion__ripple {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.12) 50%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    background-position: 200% 0;
+    transition: background-position 0.5s ease;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .btn-motion:not([disabled]):hover .btn-motion__ripple {
+    background-position: -100% 0;
+  }
+
+  /* ── Glow pulse on focus-visible ─────────────────────────────── */
+  .btn-motion:focus-visible {
+    animation: btn-glow 0.6s ease forwards;
+  }
+  @keyframes btn-glow {
+    0%   { box-shadow: 0 0 0 0 rgba(232, 196, 104, 0.4); }
+    70%  { box-shadow: 0 0 0 8px rgba(232, 196, 104, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(232, 196, 104, 0); }
+  }
+</style>
